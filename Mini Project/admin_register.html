@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Admin Register</title>
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<div class="background-animation"></div>
+<header class="navbar admin-nav">
+    <div class="nav-brand">Admin Panel</div>
+    <nav>
+        <a href="index.html" class="back-btn">Home</a>
+    </nav>
+</header>
+    <div class="auth-container">
+        <h2>Admin Registration</h2>
+        <p class="auth-subtitle">Create a new admin account with the updated UI system.</p>
+        <form id="adminRegisterForm">
+            <label>Full Name<input id="adminFullname" required></label>
+            <label>Username<input id="adminUsernameReg" required></label>
+            <label>Email<input id="adminEmailReg" type="email"></label>
+            <label>Phone<input id="adminPhoneReg" type="tel"></label>
+            <label>Password<input id="adminPasswordReg" type="password" required></label>
+            <label>Confirm Password<input id="adminConfirmPasswordReg" type="password" required></label>
+            <div class="auth-actions">
+                <button class="primary-btn" type="submit">Register</button>
+                <a class="btn" href="admin_login.html">Back to Login</a>
+            </div>
+        </form>
+    </div>
+    <script src="auth.js"></script>
+    <script src="admin_auth.js"></script>
+</body>
+</html>

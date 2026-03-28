@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizer Dashboard</title>
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="auth.js"></script>
+    <script defer src="organizer.js"></script>
+</head>
+<body>
+    <div class="background-animation"></div>
+    <header class="navbar">
+        <nav>
+            <a href="index.html">Home</a>
+            <button id="themeToggle" class="btn-secondary">Dark Mode</button>
+            <a href="#" id="logoutLink" class="login-btn">Logout</a>
+        </nav>
+    </header>
+
+    <div class="dashboard-container organizer-dashboard">
+        <aside class="sidebar">
+            <h2>EventCMS</h2>
+            <p class="subtle-text">Organizer workspace</p>
+            <div id="sidebarUser" class="sidebar-user"></div>
+            <ul>
+                <li><a href="#" data-section="home">Dashboard</a></li>
+                <li><a href="#" data-section="events">Manage Events</a></li>
+                <li><a href="#" data-section="participants">Participants</a></li>
+                <li><a href="#" data-section="analytics">Analytics</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content organizer-main">
+            <section id="home" class="section organizer-hero-section">
+                <div class="section-head organizer-hero-head">
+                    <div>
+                        <p class="about-kicker">Operations overview</p>
+                        <h2 id="welcomeMsg">Organizer Dashboard</h2>
+                        <p id="heroSummary" class="subtle-text">Track upcoming events, registrations, and execution readiness in one place.</p>
+                    </div>
+                    <div class="button-row">
+                        <button id="jumpToCreateBtn" class="primary-btn">Create Event</button>
+                        <button id="refreshDashboardBtn" class="btn-secondary">Refresh Data</button>
+                    </div>
+                </div>
+
+                <div id="overviewStats" class="organizer-stat-grid"></div>
+
+                <div class="organizer-overview-grid">
+                    <div class="panel-surface organizer-panel">
+                        <div class="section-head">
+                            <div>
+                                <h3>Upcoming Schedule</h3>
+                                <p class="subtle-text">Your next events, sorted by date.</p>
+                            </div>
+                        </div>
+                        <div id="schedulePanel" class="timeline-list"></div>
+                    </div>
+
+                    <div class="panel-surface organizer-panel">
+                        <div class="section-head">
+                            <div>
+                                <h3>Attention Needed</h3>
+                                <p class="subtle-text">A quick view of events that may need action.</p>
+                            </div>
+                        </div>
+                        <div id="focusPanel" class="focus-list"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="events" class="section hidden">
+                <div class="section-head">
+                    <div>
+                        <h2 class="section-title">Manage Events</h2>
+                        <p class="subtle-text">Create, update, and monitor event readiness from one workflow.</p>
+                    </div>
+                    <div class="button-row">
+                        <button id="toggleEventFormBtn" class="primary-btn">New Event</button>
+                    </div>
+                </div>
+
+                <div class="organizer-toolbar">
+                    <div class="toolbar-field">
+                        <label for="eventSearch">Search events</label>
+                        <input id="eventSearch" class="toolbar-search" type="text" placeholder="Search by title, venue, category, or description">
+                    </div>
+                    <div class="toolbar-field">
+                        <label for="eventStatusFilter">Status</label>
+                        <select id="eventStatusFilter">
+                            <option value="all">All statuses</option>
+                            <option value="upcoming">Upcoming</option>
+                            <option value="live">Live</option>
+                            <option value="draft">Draft</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="toolbar-field">
+                        <label for="eventSort">Sort by</label>
+                        <select id="eventSort">
+                            <option value="soonest">Soonest first</option>
+                            <option value="latest">Latest first</option>
+                            <option value="registrations">Most registrations</option>
+                            <option value="title">Title</option>
+                        </select>
+                    </div>
+                </div>
+
+                <form id="eventForm" class="panel-surface organizer-form hidden">
+                    <div class="section-head">
+                        <div>
+                            <h3 id="eventFormTitle">Create Event</h3>
+                            <p id="eventFormSubtitle" class="subtle-text">Add all important planning details for your team.</p>
+                        </div>
+                        <span id="eventEditingBadge" class="event-status-badge hidden">Editing</span>
+                    </div>
+
+                    <div class="form-grid">
+                        <div>
+                            <label for="eventTitle">Event title</label>
+                            <input id="eventTitle" name="title" type="text" required>
+                        </div>
+                        <div>
+                            <label for="eventCategory">Category</label>
+                            <select id="eventCategory" name="category">
+                                <option value="Conference">Conference</option>
+                                <option value="Workshop">Workshop</option>
+                                <option value="Meetup">Meetup</option>
+                                <option value="Volunteer">Volunteer</option>
+                                <option value="Webinar">Webinar</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="eventDate">Date</label>
+                            <input id="eventDate" name="date" type="date" required>
+                        </div>
+                        <div>
+                            <label for="eventTime">Time</label>
+                            <input id="eventTime" name="time" type="text" placeholder="10:00 AM - 1:00 PM">
+                        </div>
+                        <div>
+                            <label for="eventVenue">Venue</label>
+                            <input id="eventVenue" name="venue" type="text" placeholder="Auditorium, Campus Hall, Online">
+                        </div>
+                        <div>
+                            <label for="eventCapacity">Capacity</label>
+                            <input id="eventCapacity" name="capacity" type="text" placeholder="150">
+                        </div>
+                        <div>
+                            <label for="eventStatus">Status</label>
+                            <select id="eventStatus" name="status">
+                                <option value="upcoming">Upcoming</option>
+                                <option value="live">Live</option>
+                                <option value="draft">Draft</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="eventOwner">Coordinator</label>
+                            <input id="eventOwner" name="owner" type="text" placeholder="Organizer or team lead">
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div>
+                            <label for="eventDesc">Description</label>
+                            <textarea id="eventDesc" name="desc" placeholder="What is the event about?" required></textarea>
+                        </div>
+                        <div>
+                            <label for="eventNotes">Internal notes</label>
+                            <textarea id="eventNotes" name="notes" placeholder="Preparation notes, reminders, or special instructions"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="primary-btn">Save Event</button>
+                        <button type="button" id="cancelEventEditBtn" class="btn-secondary hidden">Cancel Edit</button>
+                        <button type="button" id="clearEventFormBtn" class="btn-ghost">Clear Form</button>
+                    </div>
+                </form>
+
+                <div id="eventEmptyState" class="panel-surface subtle-text hidden">No events match the current filters.</div>
+                <div class="event-container organizer-event-grid" id="eventContainer"></div>
+            </section>
+
+            <section id="participants" class="section hidden">
+                <div class="section-head">
+                    <div>
+                        <h2 class="section-title">Participants</h2>
+                        <p class="subtle-text">Search registrations and review the attendee mix across events.</p>
+                    </div>
+                </div>
+
+                <div class="organizer-toolbar">
+                    <div class="toolbar-field">
+                        <label for="participantSearch">Search participants</label>
+                        <input id="participantSearch" class="toolbar-search" type="text" placeholder="Search by name, email, username, or event">
+                    </div>
+                    <div class="toolbar-field">
+                        <label for="participantEventFilter">Event</label>
+                        <select id="participantEventFilter">
+                            <option value="all">All events</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="participantSummary" class="organizer-summary-strip"></div>
+                <div id="participantList" class="task-table-wrap"></div>
+            </section>
+
+            <section id="analytics" class="section hidden">
+                <div class="section-head">
+                    <div>
+                        <h2 class="section-title">Analytics Summary</h2>
+                        <p class="subtle-text">See turnout, category mix, and which events are performing best.</p>
+                    </div>
+                </div>
+
+                <div id="analyticsCards" class="card-container"></div>
+                <div class="organizer-analytics-grid">
+                    <div class="panel-surface organizer-panel">
+                        <h3>Registration Performance</h3>
+                        <div id="analyticsPerformance" class="analytics-list"></div>
+                    </div>
+                    <div class="panel-surface organizer-panel">
+                        <h3>Category Breakdown</h3>
+                        <div id="analyticsCategoryBreakdown" class="analytics-list"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

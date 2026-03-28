@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="auth.js"></script>
+    <script defer src="dashboard.js"></script>
+</head>
+<body>
+    <div class="background-animation"></div>
+    <header class="navbar">
+        <nav>
+            <a href="index.html">Home</a>
+            <button id="themeToggle" class="btn-secondary">Dark Mode</button>
+            <a href="#" id="logoutLink" class="login-btn">Logout</a>
+        </nav>
+    </header>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <h2>EventCMS</h2>
+            <div id="sidebarUser" class="sidebar-user"></div>
+            <ul>
+                <li><a href="#" data-section="home">Dashboard</a></li>
+                <li><a href="#" data-section="profile">Profile</a></li>
+                <li><a href="#" data-section="events">Events</a></li>
+                <li><a href="#" data-section="analytics">Analytics</a></li>
+                <li><a href="#" data-section="support">Support</a></li>
+                <li><a href="#" data-section="chatroom">Event Chat</a></li>
+                <li><a href="#" data-section="manage">Manage</a></li>
+                <li><a href="#" data-section="notifications">Notifications</a></li>
+                <li><a href="#" data-section="myregs">My Registrations</a></li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <section id="home" class="section">
+                <h2 id="welcomeMsg"></h2>
+                <p>Here are the upcoming events available for students to join.</p>
+                <div class="dashboard-home-tabs" role="tablist" aria-label="Dashboard event views">
+                    <button class="btn-secondary home-tab-btn active" id="homeTabUpcoming" data-home-tab="upcoming" type="button" role="tab" aria-selected="true">Upcoming Events</button>
+                    <button class="btn-secondary home-tab-btn" id="homeTabRecommended" data-home-tab="recommended" type="button" role="tab" aria-selected="false">Smart Recommendations</button>
+                    <button class="btn-secondary home-tab-btn" id="homeTabAll" data-home-tab="all" type="button" role="tab" aria-selected="false">All Events</button>
+                </div>
+                <div class="section-head dashboard-subhead">
+                    <h3 id="homePanelTitle">Upcoming Events</h3>
+                    <button id="viewUpcomingBtn" class="btn-secondary">View All Upcoming</button>
+                </div>
+                <div id="homeUpcomingPanel" class="home-tab-panel" data-home-panel="upcoming" role="tabpanel" aria-labelledby="homeTabUpcoming">
+                    <div id="dashboardUpcomingList" class="panel-surface simple-events-list scrollable-panel"></div>
+                </div>
+                <div id="homeRecommendedPanel" class="home-tab-panel hidden" data-home-panel="recommended" role="tabpanel" aria-labelledby="homeTabRecommended">
+                    <div id="recommendedEventsList" class="panel-surface simple-events-list scrollable-panel"></div>
+                </div>
+                <div id="homeAllPanel" class="home-tab-panel hidden" data-home-panel="all" role="tabpanel" aria-labelledby="homeTabAll">
+                    <div id="dashboardEventsList" class="panel-surface simple-events-list scrollable-panel"></div>
+                </div>
+            </section>
+            <section id="profile" class="section hidden">
+                <h2 class="section-title">Profile Overview</h2>
+                <a href="profile.html" class="primary-btn">Upload Photo & Resume</a>
+                <div id="profileOverview">
+                    <img id="profilePhoto" src="" alt="Profile photo" class="profile-pic hidden">
+                    <p><strong>Full Name:</strong> <span id="ovName"></span></p>
+                    <p><strong>Username:</strong> <span id="ovUser"></span></p>
+                    <p><strong>Email:</strong> <span id="ovEmail"></span></p>
+                    <p><strong>Phone:</strong> <span id="ovPhone"></span></p>
+                    <p><strong>Resume:</strong> <a id="ovResume" href="#" target="_blank" class="download-btn hidden">Download</a></p>
+                    <hr>
+                    <h3>Edit Profile</h3>
+                    <form id="profileForm">
+                        <div class="form-grid">
+                            <div><label>Full Name</label><input type="text" id="pfName"></div>
+                            <div><label>Username</label><input type="text" id="pfUser" disabled></div>
+                            <div><label>Email</label><input type="email" id="pfEmail" disabled></div>
+                            <div><label>Phone</label><input type="tel" id="pfPhone" disabled></div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="primary-btn">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+            <section id="events" class="section hidden">
+                <h2 class="reveal">Upcoming Event Options</h2>
+                <div class="control-row">
+                    <div class="button-row">
+                        <button id="filterAll" class="btn-secondary">All</button>
+                        <button id="filterUpcoming" class="btn-secondary">Upcoming</button>
+                        <button id="filterPast" class="btn-secondary">Past</button>
+                    </div>
+                </div>
+                <input type="text" id="eventSearch" class="toolbar-search" placeholder="Search events...">
+                <div class="event-container" id="eventContainer"></div>
+                <div id="eventsListView" class="panel-surface simple-events-list"></div>
+            </section>
+            <section id="manage" class="section hidden">
+                <h2 class="section-title">Manage Events</h2>
+                <button id="addEventBtn" class="primary-btn">Add New Event</button>
+            </section>
+            <section id="analytics" class="section hidden">
+                <h2 class="section-title">Analytics Summary</h2>
+                <div id="analyticsCards" class="card-container"></div>
+                <div id="analyticsDetail" class="analytics-detail-panel"></div>
+            </section>
+            <section id="support" class="section hidden">
+                <h2 class="section-title">Support Tickets</h2>
+                <div id="ticketList"></div>
+                <h3>New Ticket</h3>
+                <form id="ticketForm">
+                    <textarea id="ticketMsg" rows="4"></textarea>
+                    <div class="form-actions">
+                        <button type="submit" class="primary-btn">Submit Ticket</button>
+                    </div>
+                </form>
+            </section>
+            <section id="chatroom" class="section hidden">
+                <div class="section-head">
+                    <div>
+                        <h2 class="section-title">Event Chat / Discussion Room</h2>
+                        <p>Join the open group chat before the event starts, ask doubts, and find teammates.</p>
+                    </div>
+                </div>
+                <div class="chat-room-toolbar">
+                    <label for="chatEventSelect">Choose Event Group</label>
+                    <select id="chatEventSelect"></select>
+                </div>
+                <div id="chatRoomFeed" class="chat-room-feed"></div>
+                <form id="chatRoomForm" class="chat-room-form">
+                    <textarea id="chatRoomInput" rows="3" placeholder="Write a message to everyone in this event group..."></textarea>
+                    <div class="form-actions">
+                        <button type="submit" class="primary-btn">Send to Group</button>
+                    </div>
+                </form>
+            </section>
+            <section id="notifications" class="section hidden">
+                <h2 class="section-title">Notifications</h2>
+                <div id="notifList">
+                    <p>No notifications yet.</p>
+                </div>
+            </section>
+            <section id="myregs" class="section hidden">
+                <h2 class="section-title">My Registrations</h2>
+                <div class="event-container" id="myRegs"></div>
+                <div id="myRegsList" class="panel-surface simple-events-list"></div>
+            </section>
+        </main>
+    </div>
+    <button id="chatbotToggle" class="chatbot-toggle" type="button" aria-controls="chatbotDrawer" aria-expanded="false">AI</button>
+    <div id="chatbotBackdrop" class="chatbot-backdrop hidden"></div>
+    <aside id="chatbotDrawer" class="chatbot-drawer" aria-hidden="true">
+        <div class="chatbot-drawer-header">
+            <div class="chatbot-head">
+                <h3>AI Chatbot</h3>
+                <p>Type your question and get help with events, joining, registrations, and navigation.</p>
+            </div>
+            <button id="chatbotClose" class="chatbot-close" type="button" aria-label="Close AI chatbot">x</button>
+        </div>
+        <div id="chatbotMessages" class="chatbot-messages"></div>
+        <div class="chatbot-suggestions">
+            <button type="button" class="chatbot-chip" data-chatbot-prompt="Show upcoming events">Upcoming</button>
+            <button type="button" class="chatbot-chip" data-chatbot-prompt="Open my registrations">My Registrations</button>
+            <button type="button" class="chatbot-chip" data-chatbot-prompt="How do I join an event?">How to join</button>
+        </div>
+        <form id="chatbotForm" class="chatbot-form">
+            <textarea id="chatbotInput" rows="3" placeholder="Type your question here..." autocomplete="off"></textarea>
+            <button type="submit" class="btn-secondary">Send</button>
+        </form>
+    </aside>
+
+</body>
+</html>

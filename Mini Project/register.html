@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register</title>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="register.css">
+</head>
+<body>
+<div class="background-animation"></div>
+
+<header class="navbar">
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+    </nav>
+</header>
+
+<div class="register-container">
+    <div class="register-box">
+        <h2>Create Account</h2>
+        <p class="auth-subtitle">Create your account and start joining or managing events.</p>
+        <form>
+            <div class="input-box">
+                <label>Full Name</label>
+                <input type="text" id="fullname" required>
+            </div>
+
+            <div class="input-box">
+                <label>Email</label>
+                <input type="email" id="email" required>
+            </div>
+
+            <div class="input-box">
+                <label>Phone (optional)</label>
+                <input type="tel" id="phone">
+            </div>
+
+            <div class="input-box">
+                <label>Username</label>
+                <input type="text" id="username" required>
+            </div>
+
+            <div class="input-box">
+                <label>Password</label>
+                <input type="password" id="password" required>
+            </div>
+
+            <div class="input-box">
+                <label>Confirm Password</label>
+                <input type="password" id="confirmPassword" required>
+            </div>
+
+            <div class="input-box">
+                <label>Role</label>
+                <select id="role">
+                    <option value="participant">Participant</option>
+                    <option value="organizer">Organizer</option>
+                    <option value="volunteer">Volunteer</option>
+                </select>
+            </div>
+
+            <button type="submit" class="primary-btn">Register</button>
+
+            <div class="login-link">
+                <p>Already have an account? <a href="login.html">Login</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+(function(){
+  const t = localStorage.getItem('theme') || 'light';
+  if(t==='dark') document.body.classList.add('dark');
+})();
+</script>
+<script src="auth.js"></script>
+<script src="register.js"></script>
+</body>
+</html>

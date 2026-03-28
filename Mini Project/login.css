@@ -1,0 +1,106 @@
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 56px;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.login-box {
+  width: min(440px, 100%);
+  padding: 36px 32px;
+  background: linear-gradient(180deg, var(--glass-strong), var(--glass));
+  border: 1px solid var(--border-soft);
+  border-radius: 28px;
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  box-shadow: var(--shadow-soft);
+  animation: fadeIn 0.8s ease;
+}
+
+.login-box h2 {
+  text-align: center;
+  margin-bottom: 12px;
+  color: var(--text-main);
+  font-size: 2rem;
+}
+
+.login-box .auth-subtitle {
+  text-align: center;
+  color: var(--text-soft);
+  margin-bottom: 28px;
+}
+
+.input-box {
+  margin: 18px 0;
+}
+
+.input-box label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-main);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.input-box input,
+.input-box select {
+  width: 100%;
+}
+
+.login-box button {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 20px;
+  color: var(--text-soft);
+}
+
+.register-link a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.login-box {
+  border-radius: 30px;
+  padding: 40px 36px;
+}
+
+.login-box h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.8rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.login-box .auth-subtitle {
+  line-height: 1.7;
+}
+
+.input-box label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+}

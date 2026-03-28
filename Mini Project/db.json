@@ -1,0 +1,84 @@
+{
+  "users": [
+    {
+      "fullname": "sujal",
+      "username": "sujal@1234",
+      "role": "participant"
+    },
+    {
+      "fullname": "sujal",
+      "username": "sujal@12345",
+      "role": "participant"
+    },
+    {
+      "fullname": "Sujal Choudhary",
+      "username": "sujal@12341",
+      "role": "admin"
+    }
+  ],
+  "events": [
+    {
+      "title": "Tech Fest 2026",
+      "desc": "Innovative coding & robotics competition.",
+      "date": "2026-05-20",
+      "id": 1772219473307
+    },
+    {
+      "title": "Hackathon",
+      "desc": "24-hour innovation marathon.",
+      "date": "2026-07-10",
+      "id": 1772219473328
+    },
+    {
+      "title": "Cultural Night",
+      "desc": "Dance, Music & Art Performances.",
+      "date": "2026-09-05",
+      "id": 1772219473358
+    },
+    {
+      "title": "AI Innovation Summit",
+      "desc": "Student teams present AI tools, demos, and smart campus ideas.",
+      "date": "2026-04-18",
+      "id": 1774451400001
+    },
+    {
+      "title": "Startup Pitch Arena",
+      "desc": "Pitch your startup idea to mentors and compete for the top prize.",
+      "date": "2026-05-08",
+      "id": 1774451400002
+    },
+    {
+      "title": "Design Sprint Challenge",
+      "desc": "A fast-paced UI and UX competition for creative student builders.",
+      "date": "2026-06-14",
+      "id": 1774451400003
+    },
+    {
+      "title": "Premium AI Workshop",
+      "desc": "Advanced AI/ML workshop with hands-on projects and certification. Limited seats.",
+      "date": "2026-03-15",
+      "id": 999999
+    },
+    {
+      "title": "Campus Maker Expo",
+      "desc": "Showcase your prototypes, robots, and creative builds with students and mentors.",
+      "date": "2026-04-27",
+      "id": 1774451400501
+    },
+    {
+      "title": "Climate Action Hackathon",
+      "desc": "Collaborate for a weekend to design climate-tech solutions powered by your campus community.",
+      "date": "2026-05-15",
+      "id": 1774451400502
+    },
+    {
+      "title": "Community Film Showcase",
+      "desc": "Submit short films, attend filmmaker panels, and join post-screening discussions.",
+      "date": "2026-06-22",
+      "id": 1774451400503
+    }
+  ],
+  "registrations": [],
+  "tickets": [],
+  "profiles": []
+}

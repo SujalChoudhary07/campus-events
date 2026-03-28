@@ -1,0 +1,106 @@
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 56px;
+}
+
+.register-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 48px 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.register-box {
+  width: min(500px, 100%);
+  padding: 38px 32px;
+  background: linear-gradient(180deg, var(--glass-strong), var(--glass));
+  border: 1px solid var(--border-soft);
+  border-radius: 28px;
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  box-shadow: var(--shadow-soft);
+  animation: slideUp 0.85s ease;
+}
+
+.register-box h2 {
+  text-align: center;
+  margin-bottom: 12px;
+  color: var(--text-main);
+  font-size: 2rem;
+}
+
+.register-box .auth-subtitle {
+  text-align: center;
+  color: var(--text-soft);
+  margin-bottom: 26px;
+}
+
+.input-box {
+  margin: 16px 0;
+}
+
+.input-box label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-main);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.input-box input,
+.input-box select {
+  width: 100%;
+}
+
+.register-box button {
+  width: 100%;
+  margin-top: 14px;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 22px;
+  color: var(--text-soft);
+}
+
+.login-link a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(26px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.register-box {
+  border-radius: 30px;
+  padding: 42px 36px;
+}
+
+.register-box h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.8rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.register-box .auth-subtitle {
+  line-height: 1.7;
+}
+
+.input-box label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+}

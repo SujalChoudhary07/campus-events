@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Page</title>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="login.css">
+</head>
+<body>
+<div class="background-animation"></div>
+
+<header class="navbar">
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="login-box">
+        <h2>Welcome Back</h2>
+        <p class="auth-subtitle">Sign in to continue to your event dashboard.</p>
+        <form>
+            <div class="input-box">
+                <label>Username</label>
+                <input type="text" id="username" required>
+            </div>
+
+            <div class="input-box">
+                <label>Password</label>
+                <input type="password" id="password" required>
+            </div>
+
+            <div class="input-box">
+                <label>Role</label>
+                <select id="role">
+                    <option value="participant">Participant</option>
+                    <option value="organizer">Organizer</option>
+                    <option value="volunteer">Volunteer</option>
+                </select>
+            </div>
+
+            <button type="submit" class="primary-btn">Login</button>
+
+            <div class="register-link">
+                <p>Don't have an account? <a href="register.html">Register</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+(function(){
+  const t = localStorage.getItem('theme') || 'light';
+  if(t==='dark') document.body.classList.add('dark');
+})();
+</script>
+<script src="auth.js"></script>
+<script src="login.js"></script>
+</body>
+</html>

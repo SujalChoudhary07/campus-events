@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<div class="background-animation"></div>
+
+<header class="navbar admin-nav">
+    <div class="nav-brand">Admin Control Center</div>
+    <nav>
+        <a href="index.html" class="back-btn">Home</a>
+        <button id="refreshDashboard" class="btn">Refresh</button>
+        <span id="lastUpdated" class="admin-meta"></span>
+    </nav>
+</header>
+
+<div id="profileModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>User Profile</h2>
+            <button class="close-btn" onclick="closeModal()">X</button>
+        </div>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
+<main class="admin-page">
+    <section class="admin-hero">
+        <div class="admin-hero-copy">
+            <span class="admin-eyebrow">Operations Dashboard</span>
+            <h1 id="adminWelcomeHeading">Welcome back, Admin.</h1>
+            <p>Review platform health, spot issues quickly, and take action without digging through raw data.</p>
+        </div>
+        <div class="admin-hero-panels">
+            <div class="hero-panel">
+                <span class="hero-label">Platform Health</span>
+                <strong id="healthScore">0%</strong>
+                <p id="healthText">Waiting for data...</p>
+            </div>
+            <div class="hero-panel">
+                <span class="hero-label">Next Priority</span>
+                <strong id="priorityCount">0</strong>
+                <p id="priorityText">No urgent items yet.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-grid" id="statsGrid"></section>
+    <section id="statsDetailPanel" class="stats-detail-panel hidden" aria-live="polite">
+        <div class="stats-detail-head">
+            <div>
+                <span id="statsDetailKicker" class="section-kicker">Details</span>
+                <h2 id="statsDetailTitle">Overview</h2>
+            </div>
+        </div>
+        <div id="statsDetailBody" class="stats-detail-body"></div>
+    </section>
+
+    <section class="admin-layout">
+        <div class="admin-main">
+            <section class="data-section">
+                <div class="section-top">
+                    <div>
+                        <span class="section-kicker">Insights</span>
+                        <h2>Executive Summary</h2>
+                    </div>
+                </div>
+                <div class="insight-grid" id="insightGrid"></div>
+            </section>
+
+            <section class="data-section">
+                <div class="section-top">
+                    <div>
+                        <span class="section-kicker">Management</span>
+                        <h2>User Directory</h2>
+                    </div>
+                    <div class="section-actions">
+                        <input id="userSearch" class="admin-search" type="text" placeholder="Search users by name, username, email, or role">
+                    </div>
+                </div>
+                <div class="table-wrapper users-table-wrapper">
+                    <table id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Contact</th>
+                                <th>Role</th>
+                                <th>Assets</th>
+                                <th>Joined</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="data-section">
+                <div class="section-top">
+                    <div>
+                        <span class="section-kicker">Events</span>
+                        <h2>Event Operations</h2>
+                    </div>
+                    <div class="section-actions">
+                        <select id="eventFilter" class="admin-select">
+                            <option value="all">All Events</option>
+                            <option value="upcoming">Upcoming</option>
+                            <option value="past">Past</option>
+                            <option value="high">High Registration</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table id="eventsTable">
+                        <thead>
+                            <tr>
+                                <th>Event</th>
+                                <th>Date</th>
+                                <th>Organizer</th>
+                                <th>Participants</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="data-section">
+                <div class="section-top">
+                    <div>
+                        <span class="section-kicker">Participation</span>
+                        <h2>Registrations</h2>
+                    </div>
+                    <div class="section-actions">
+                        <select id="registrationFilter" class="admin-select">
+                            <option value="all">All Registrations</option>
+                            <option value="registered">Registered</option>
+                            <option value="today">Today</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table id="regsTable">
+                        <thead>
+                            <tr>
+                                <th>Participant</th>
+                                <th>Event</th>
+                                <th>Pass Code</th>
+                                <th>Status</th>
+                                <th>Registered</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="data-section">
+                <div class="section-top">
+                    <div>
+                        <span class="section-kicker">Support</span>
+                        <h2>Tickets</h2>
+                    </div>
+                    <div class="section-actions">
+                        <select id="ticketFilter" class="admin-select">
+                            <option value="all">All Tickets</option>
+                            <option value="open">Open</option>
+                            <option value="closed">Closed</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table id="ticketsTable">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Subject</th>
+                                <th>Message</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <aside class="admin-sidebar">
+            <section class="data-section sidebar-section">
+                <div class="section-top">
+                    <div>
+                        <span class="section-kicker">Highlights</span>
+                        <h2>Quick Snapshot</h2>
+                    </div>
+                </div>
+                <div id="snapshotCards" class="snapshot-list"></div>
+            </section>
+
+            <section class="data-section sidebar-section">
+                <div class="section-top">
+                    <div>
+                        <span class="section-kicker">Rankings</span>
+                        <h2>Top Events</h2>
+                    </div>
+                </div>
+                <div id="topEventsList" class="compact-list"></div>
+            </section>
+
+            <section class="data-section sidebar-section">
+                <div class="section-top">
+                    <div>
+                        <span class="section-kicker">Activity</span>
+                        <h2>Recent Timeline</h2>
+                    </div>
+                </div>
+                <div id="activityFeed" class="timeline-list timeline-scroll"></div>
+            </section>
+        </aside>
+    </section>
+</main>
+
+<script src="auth.js"></script>
+<script>
+let adminData = null;
+let activeStatKey = null;
+
+function formatDate(value, withTime = false) {
+    if (!value) return '-';
+    const date = new Date(value);
+    return withTime ? date.toLocaleString() : date.toLocaleDateString();
+}
+
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function getRoleCount(role) {
+    return (adminData.users || []).filter(user => user.role === role).length;
+}
+
+function getProfileByUsername(username) {
+    return (adminData.profiles || []).find(profile => profile.username === username) || {};
+}
+
+function getRegistrationsForEvent(eventId) {
+    return (adminData.registrations || []).filter(reg => reg.eventId === eventId);
+}
+
+function getEventById(eventId) {
+    return (adminData.events || []).find(event => event.id === eventId);
+}
+
+function getTicketStatusClass(status) {
+    return status === 'open' ? 'status-error' : 'status-success';
+}
+
+function getEventStatus(event) {
+    if (!event.date) return { label: 'Undated', className: 'status-warning' };
+    const now = new Date();
+    const eventDate = new Date(event.date);
+    if (eventDate >= new Date(now.toDateString())) {
+        return { label: 'Upcoming', className: 'status-info' };
+    }
+    return { label: 'Completed', className: 'status-success' };
+}
+
+function renderStats() {
+    const tickets = adminData.tickets || [];
+    const events = adminData.events || [];
+    const registrations = adminData.registrations || [];
+    const profiles = adminData.profiles || [];
+    const upcomingEvents = events.filter(event => event.date && new Date(event.date) >= new Date(new Date().toDateString())).length;
+    const profileCoverage = adminData.users.length ? Math.round((profiles.length / adminData.users.length) * 100) : 0;
+
+    const statItems = [
+        { key: 'users', label: 'Total Users', value: adminData.totalUsers, note: `${getRoleCount('participant')} participants` },
+        { key: 'organizers', label: 'Organizers', value: adminData.organizers, note: `${getRoleCount('volunteer')} volunteers` },
+        { key: 'events', label: 'Events', value: adminData.totalEvents, note: `${upcomingEvents} upcoming` },
+        { key: 'registrations', label: 'Registrations', value: adminData.totalRegistrations, note: `${registrations.length ? Math.round(registrations.length / Math.max(events.length, 1)) : 0} avg per event` },
+        { key: 'tickets', label: 'Open Tickets', value: adminData.openTickets, note: `${tickets.length - adminData.openTickets} resolved` },
+        { key: 'profiles', label: 'Profile Completion', value: `${profileCoverage}%`, note: `${profiles.length} profiles uploaded` }
+    ];
+
+    document.getElementById('statsGrid').innerHTML = statItems.map(item => `
+        <button class="stat-card stat-card-button ${activeStatKey === item.key ? 'active' : ''}" type="button" data-stat-key="${item.key}">
+            <span class="stat-label">${item.label}</span>
+            <h3>${item.value}</h3>
+            <p>${item.note}</p>
+        </button>
+    `).join('');
+
+    document.querySelectorAll('.stat-card-button').forEach(button => {
+        button.addEventListener('click', () => showStatDetails(button.dataset.statKey));
+    });
+
+    if (activeStatKey) {
+        showStatDetails(activeStatKey);
+    }
+}
+
+function showStatDetails(statKey) {
+    activeStatKey = statKey;
+    const panel = document.getElementById('statsDetailPanel');
+    const title = document.getElementById('statsDetailTitle');
+    const kicker = document.getElementById('statsDetailKicker');
+    const body = document.getElementById('statsDetailBody');
+    if (!panel || !title || !kicker || !body || !adminData) return;
+
+    const users = adminData.users || [];
+    const events = adminData.events || [];
+    const registrations = adminData.registrations || [];
+    const tickets = adminData.tickets || [];
+    const profiles = adminData.profiles || [];
+
+    const detailMap = {
+        users: {
+            kicker: 'User Details',
+            title: 'Total Users Breakdown',
+            items: [
+                `Participants: ${getRoleCount('participant')}`,
+                `Organizers: ${getRoleCount('organizer')}`,
+                `Volunteers: ${getRoleCount('volunteer')}`,
+                `Admins: ${users.filter(user => user.role === 'admin').length}`
+            ]
+        },
+        organizers: {
+            kicker: 'Organizer Details',
+            title: 'Organizer and Volunteer Snapshot',
+            items: [
+                `Organizers on platform: ${getRoleCount('organizer')}`,
+                `Volunteers supporting events: ${getRoleCount('volunteer')}`,
+                `Upcoming events assigned: ${events.filter(event => event.organizer).length}`
+            ]
+        },
+        events: {
+            kicker: 'Event Details',
+            title: 'Event Pipeline Overview',
+            items: [
+                `Total events created: ${events.length}`,
+                `Upcoming events: ${events.filter(event => event.date && new Date(event.date) >= new Date(new Date().toDateString())).length}`,
+                `Past events: ${events.filter(event => event.date && new Date(event.date) < new Date(new Date().toDateString())).length}`
+            ]
+        },
+        registrations: {
+            kicker: 'Registration Details',
+            title: 'Registration Activity',
+            items: [
+                `Total registrations: ${registrations.length}`,
+                `Average per event: ${registrations.length ? Math.round(registrations.length / Math.max(events.length, 1)) : 0}`,
+                `Today registrations: ${registrations.filter(reg => (reg.registeredAt || reg.time) && new Date(reg.registeredAt || reg.time).toDateString() === new Date().toDateString()).length}`
+            ]
+        },
+        tickets: {
+            kicker: 'Support Details',
+            title: 'Ticket Status Overview',
+            items: [
+                `Open tickets: ${tickets.filter(ticket => ticket.status === 'open').length}`,
+                `Closed tickets: ${tickets.filter(ticket => ticket.status === 'closed').length}`,
+                `Total support requests: ${tickets.length}`
+            ]
+        },
+        profiles: {
+            kicker: 'Profile Details',
+            title: 'Profile Completion Status',
+            items: [
+                `Profiles uploaded: ${profiles.length}`,
+                `Users with resume: ${profiles.filter(profile => profile.resume).length}`,
+                `Users with photo: ${profiles.filter(profile => profile.photo).length}`
+            ]
+        }
+    };
+
+    const detail = detailMap[statKey];
+    if (!detail) return;
+
+    kicker.textContent = detail.kicker;
+    title.textContent = detail.title;
+    body.innerHTML = detail.items.map(item => `<div class="stats-detail-item">${escapeHtml(item)}</div>`).join('');
+    panel.classList.remove('hidden');
+    panel.classList.remove('is-visible');
+    void panel.offsetWidth;
+    panel.classList.add('is-visible');
+
+    document.querySelectorAll('.stat-card-button').forEach(button => {
+        button.classList.toggle('active', button.dataset.statKey === statKey);
+    });
+}
+
+function renderExecutiveSummary() {
+    const users = adminData.users || [];
+    const events = adminData.events || [];
+    const registrations = adminData.registrations || [];
+    const tickets = adminData.tickets || [];
+    const profiles = adminData.profiles || [];
+    const upcomingEvents = events.filter(event => event.date && new Date(event.date) >= new Date(new Date().toDateString()));
+    const ticketsOpen = tickets.filter(ticket => ticket.status === 'open');
+    const documentsUploaded = profiles.filter(profile => profile.photo || profile.resume).length;
+    const busiestEvent = events
+        .map(event => ({ ...event, registrationCount: getRegistrationsForEvent(event.id).length }))
+        .sort((a, b) => b.registrationCount - a.registrationCount)[0];
+
+    const insights = [
+        { title: 'User Base Mix', value: `${getRoleCount('participant')} / ${getRoleCount('organizer')} / ${getRoleCount('volunteer')}`, text: 'Participants, organizers, and volunteers are distributed across the platform.' },
+        { title: 'Upcoming Schedule', value: `${upcomingEvents.length} live pipeline`, text: upcomingEvents.length ? `Next event: ${escapeHtml(upcomingEvents.sort((a, b) => new Date(a.date) - new Date(b.date))[0].title)}` : 'No upcoming events are currently scheduled.' },
+        { title: 'Support Pressure', value: `${ticketsOpen.length} open`, text: ticketsOpen.length ? 'There are active support tickets waiting for admin action.' : 'All support tickets are currently resolved.' },
+        { title: 'Content Completeness', value: `${documentsUploaded}/${users.length}`, text: 'Users with at least one uploaded asset such as a profile photo or resume.' },
+        { title: 'Busiest Event', value: busiestEvent ? busiestEvent.registrationCount : 0, text: busiestEvent ? `${escapeHtml(busiestEvent.title)} has the highest registration volume.` : 'No event activity yet.' },
+        { title: 'Average Load', value: events.length ? `${Math.round(registrations.length / events.length)}` : '0', text: 'Average registrations per event across the entire system.' }
+    ];
+
+    document.getElementById('insightGrid').innerHTML = insights.map(item => `
+        <article class="insight-card">
+            <span class="insight-title">${item.title}</span>
+            <strong>${item.value}</strong>
+            <p>${item.text}</p>
+        </article>
+    `).join('');
+
+    const healthScore = Math.max(0, Math.min(100, 100 - (ticketsOpen.length * 8) - (upcomingEvents.length === 0 ? 15 : 0) + Math.min(documentsUploaded * 2, 20)));
+    document.getElementById('healthScore').textContent = `${healthScore}%`;
+    document.getElementById('healthText').textContent = ticketsOpen.length ? `${ticketsOpen.length} unresolved support items need attention.` : 'Operations look stable and support backlog is under control.';
+    document.getElementById('priorityCount').textContent = ticketsOpen.length || upcomingEvents.length;
+    document.getElementById('priorityText').textContent = ticketsOpen.length ? 'Resolve open support tickets first.' : upcomingEvents.length ? 'Monitor upcoming event readiness and attendance.' : 'Create fresh events to keep activity moving.';
+}
+
+function renderSnapshots() {
+    const users = adminData.users || [];
+    const profiles = adminData.profiles || [];
+    const registrations = adminData.registrations || [];
+    const tickets = adminData.tickets || [];
+    const snapshotItems = [
+        { label: 'Users With Resume', value: profiles.filter(profile => profile.resume).length },
+        { label: 'Users With Photo', value: profiles.filter(profile => profile.photo).length },
+        { label: 'Registrations Today', value: registrations.filter(reg => reg.registeredAt && new Date(reg.registeredAt).toDateString() === new Date().toDateString()).length },
+        { label: 'Closed Tickets', value: tickets.filter(ticket => ticket.status === 'closed').length },
+        { label: 'Admin Accounts', value: users.filter(user => user.role === 'admin').length }
+    ];
+
+    document.getElementById('snapshotCards').innerHTML = snapshotItems.map(item => `
+        <div class="snapshot-card">
+            <span>${item.label}</span>
+            <strong>${item.value}</strong>
+        </div>
+    `).join('');
+}
+
+function renderTopEvents() {
+    const topEvents = (adminData.events || []).map(event => ({ ...event, registrationCount: getRegistrationsForEvent(event.id).length })).sort((a, b) => b.registrationCount - a.registrationCount).slice(0, 5);
+    const container = document.getElementById('topEventsList');
+    if (!topEvents.length) {
+        container.innerHTML = '<p class="table-empty">No events available yet.</p>';
+        return;
+    }
+
+    container.innerHTML = topEvents.map((event, index) => `
+        <div class="compact-item">
+            <div>
+                <span class="compact-rank">#${index + 1}</span>
+                <strong>${escapeHtml(event.title)}</strong>
+                <p>${event.registrationCount} registrations</p>
+            </div>
+            <span class="role-badge">${escapeHtml(event.organizer || 'Unassigned')}</span>
+        </div>
+    `).join('');
+}
+
+function renderActivityFeed() {
+    const items = [];
+    (adminData.users || []).forEach(user => items.push({ type: 'User joined', text: `${user.fullname || user.username} joined as ${user.role}.`, date: user.createdAt }));
+    (adminData.events || []).forEach(event => items.push({ type: 'Event created', text: `${event.title} was created${event.organizer ? ` by ${event.organizer}` : ''}.`, date: event.createdAt }));
+    (adminData.tickets || []).forEach(ticket => items.push({ type: 'Support ticket', text: `${ticket.user} submitted ${ticket.subject || 'a support request'}.`, date: ticket.createdAt }));
+
+    const container = document.getElementById('activityFeed');
+    const sorted = items.filter(item => item.date).sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 8);
+    if (!sorted.length) {
+        container.innerHTML = '<p class="table-empty">No recent activity available.</p>';
+        return;
+    }
+
+    container.innerHTML = sorted.map(item => `
+        <div class="timeline-item">
+            <span class="timeline-type">${item.type}</span>
+            <p>${escapeHtml(item.text)}</p>
+            <small>${formatDate(item.date, true)}</small>
+        </div>
+    `).join('');
+}
+
+function renderUsers() {
+    const query = document.getElementById('userSearch').value.trim().toLowerCase();
+    const users = (adminData.users || []).filter(user => `${user.username} ${user.fullname || ''} ${user.email || ''} ${user.role || ''}`.toLowerCase().includes(query));
+    const tbody = document.querySelector('#usersTable tbody');
+    if (!users.length) {
+        tbody.innerHTML = '<tr><td colspan="6" class="table-empty">No users match the current search.</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = users.map(user => {
+        const profile = getProfileByUsername(user.username);
+        return `
+            <tr>
+                <td><strong>${escapeHtml(user.fullname || user.username)}</strong><div class="cell-subtext">@${escapeHtml(user.username)}</div></td>
+                <td><div>${escapeHtml(user.email || '-')}</div><div class="cell-subtext">${escapeHtml(user.phone || 'No phone')}</div></td>
+                <td><span class="role-badge">${escapeHtml(user.role || 'user')}</span></td>
+                <td><div class="asset-pills"><span class="asset-pill ${profile.photo ? 'asset-pill-ready' : ''}">Photo</span><span class="asset-pill ${profile.resume ? 'asset-pill-ready' : ''}">Resume</span></div></td>
+                <td>${formatDate(user.createdAt)}</td>
+                <td><button class="btn" onclick="viewUserDetails('${escapeHtml(user.username)}')">Open Profile</button></td>
+            </tr>
+        `;
+    }).join('');
+}
+
+function renderEvents() {
+    const filter = document.getElementById('eventFilter').value;
+    let events = (adminData.events || []).map(event => ({ ...event, registrationCount: getRegistrationsForEvent(event.id).length }));
+    if (filter === 'upcoming') events = events.filter(event => event.date && new Date(event.date) >= new Date(new Date().toDateString()));
+    else if (filter === 'past') events = events.filter(event => event.date && new Date(event.date) < new Date(new Date().toDateString()));
+    else if (filter === 'high') events = events.filter(event => event.registrationCount >= 3);
+
+    const tbody = document.querySelector('#eventsTable tbody');
+    if (!events.length) {
+        tbody.innerHTML = '<tr><td colspan="6" class="table-empty">No events found for the selected filter.</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = events.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0)).map(event => {
+        const status = getEventStatus(event);
+        return `
+            <tr>
+                <td><strong>${escapeHtml(event.title)}</strong><div class="cell-subtext">${escapeHtml(event.desc ? event.desc.slice(0, 70) : 'No description provided')}</div></td>
+                <td>${escapeHtml(event.date || '-')}</td>
+                <td>${escapeHtml(event.organizer || 'Unassigned')}</td>
+                <td>${event.registrationCount}</td>
+                <td><span class="${status.className}">${status.label}</span></td>
+                <td>${formatDate(event.createdAt)}</td>
+            </tr>
+        `;
+    }).join('');
+}
+
+function renderRegistrations() {
+    const filter = document.getElementById('registrationFilter').value;
+    let registrations = [...(adminData.registrations || [])];
+    if (filter === 'registered') registrations = registrations.filter(registration => (registration.status || 'registered') === 'registered');
+    else if (filter === 'today') registrations = registrations.filter(registration => registration.registeredAt && new Date(registration.registeredAt).toDateString() === new Date().toDateString());
+
+    const tbody = document.querySelector('#regsTable tbody');
+    if (!registrations.length) {
+        tbody.innerHTML = '<tr><td colspan="5" class="table-empty">No registrations found for the selected filter.</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = registrations.sort((a, b) => new Date(b.registeredAt || 0) - new Date(a.registeredAt || 0)).map(registration => {
+        const event = getEventById(registration.eventId);
+        return `
+            <tr>
+                <td>${escapeHtml(registration.username)}</td>
+                <td>${escapeHtml(event ? event.title : `Event #${registration.eventId}`)}</td>
+                <td><code>${escapeHtml(registration.code || '-')}</code></td>
+                <td><span class="status-info">${escapeHtml(registration.status || 'registered')}</span></td>
+                <td>${formatDate(registration.registeredAt, true)}</td>
+            </tr>
+        `;
+    }).join('');
+}
+
+function renderTickets() {
+    const filter = document.getElementById('ticketFilter').value;
+    let tickets = [...(adminData.tickets || [])];
+    if (filter !== 'all') tickets = tickets.filter(ticket => (ticket.status || 'open') === filter);
+
+    const tbody = document.querySelector('#ticketsTable tbody');
+    if (!tickets.length) {
+        tbody.innerHTML = '<tr><td colspan="6" class="table-empty">No tickets found for the selected filter.</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = tickets.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0)).map(ticket => {
+        const isOpen = (ticket.status || 'open') === 'open';
+        return `
+            <tr>
+                <td>${escapeHtml(ticket.user || '-')}</td>
+                <td>${escapeHtml(ticket.subject || 'General Support')}</td>
+                <td>${escapeHtml(ticket.message ? ticket.message.slice(0, 80) : '-')}</td>
+                <td><span class="${getTicketStatusClass(ticket.status || 'open')}">${escapeHtml(ticket.status || 'open')}</span></td>
+                <td>${formatDate(ticket.createdAt, true)}</td>
+                <td>${isOpen ? `<button class="btn" onclick="updateTicketStatus(${ticket.id}, 'closed')">Mark Closed</button>` : `<button class="btn" onclick="updateTicketStatus(${ticket.id}, 'open')">Reopen</button>`}</td>
+            </tr>
+        `;
+    }).join('');
+}
+
+function renderAllSections() {
+    renderStats();
+    renderExecutiveSummary();
+    renderSnapshots();
+    renderTopEvents();
+    renderActivityFeed();
+    renderUsers();
+    renderEvents();
+    renderRegistrations();
+    renderTickets();
+    document.getElementById('lastUpdated').textContent = `Updated ${new Date().toLocaleTimeString()}`;
+}
+
+async function loadAdminData() {
+    try {
+        const response = await apiFetch('/api/admin/summary');
+        if (!response.ok) throw new Error(await response.text());
+        adminData = await response.json();
+        renderAllSections();
+    } catch (error) {
+        console.error(error);
+        alert('Failed to load admin data');
+    }
+}
+
+async function updateTicketStatus(id, status) {
+    try {
+        const response = await apiFetch(`/api/tickets/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status })
+        });
+        if (!response.ok) throw new Error('Failed to update ticket');
+        await loadAdminData();
+    } catch (error) {
+        console.error(error);
+        alert('Unable to update ticket status');
+    }
+}
+
+function viewUserDetails(username) {
+    apiFetch(`/api/users/${username}`)
+        .then(async response => {
+            if (!response.ok) throw new Error(await response.text());
+            return response.json();
+        })
+        .then(data => {
+            const user = data.user;
+            const profile = data.profile || {};
+            document.getElementById('modalBody').innerHTML = `
+                <div class="modal-profile-layout">
+                    <div class="modal-profile-main">
+                        ${profile.photo ? `<img src="${profile.photo}" alt="Profile" class="profile-pic">` : '<div class="profile-avatar-fallback">No Photo</div>'}
+                        <h3>${escapeHtml(user.fullname || user.username)}</h3>
+                        <p class="subtle-text">@${escapeHtml(user.username)}</p>
+                        <div class="modal-metrics">
+                            <div class="snapshot-card"><span>Role</span><strong>${escapeHtml(user.role || '-')}</strong></div>
+                            <div class="snapshot-card"><span>Joined</span><strong>${formatDate(user.createdAt)}</strong></div>
+                            <div class="snapshot-card"><span>Events</span><strong>${data.events.length}</strong></div>
+                            <div class="snapshot-card"><span>Tickets</span><strong>${data.tickets.length}</strong></div>
+                        </div>
+                    </div>
+                    <div class="modal-profile-info">
+                        <div class="info-list">
+                            <div class="info-item"><span>Email</span><strong>${escapeHtml(user.email || '-')}</strong></div>
+                            <div class="info-item"><span>Phone</span><strong>${escapeHtml(user.phone || '-')}</strong></div>
+                            <div class="info-item"><span>Registrations</span><strong>${data.registrations.length}</strong></div>
+                            <div class="info-item"><span>Uploaded Resume</span><strong>${profile.resume ? 'Available' : 'Not uploaded'}</strong></div>
+                        </div>
+                        <div class="profile-files">
+                            <h3>Uploaded Files</h3>
+                            <div class="file-action-row">
+                                ${profile.photo ? `<a href="${profile.photo}" download="profile-photo.jpg" class="download-btn-modal">Download Photo</a>` : '<span class="table-empty">No photo uploaded</span>'}
+                                ${profile.resume ? `<a href="${profile.resume}" download="${escapeHtml(profile.resumeFileName || 'resume.pdf')}" class="download-btn-modal">Download Resume</a>` : '<span class="table-empty">No resume uploaded</span>'}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('profileModal').classList.add('active');
+        })
+        .catch(error => {
+            console.error(error);
+            alert('Failed to load user details');
+        });
+}
+
+function closeModal() {
+    document.getElementById('profileModal').classList.remove('active');
+}
+
+document.getElementById('profileModal').addEventListener('click', event => {
+    if (event.target.id === 'profileModal') closeModal();
+});
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const user = await requireAuthPage(['admin'], 'admin_login.html');
+    if (!user) return;
+
+    const welcomeHeading = document.getElementById('adminWelcomeHeading');
+    if (welcomeHeading) {
+        welcomeHeading.textContent = `Welcome back, ${user.fullname || user.username || 'Admin'}.`;
+    }
+
+    const nav = document.querySelector('.admin-nav nav');
+    const btn = document.createElement('button');
+    btn.className = 'btn';
+    btn.textContent = `Logout (${user.username || 'admin'})`;
+    btn.onclick = () => {
+        logoutAndRedirect('admin_login.html');
+    };
+    nav.appendChild(btn);
+
+    document.getElementById('refreshDashboard').addEventListener('click', loadAdminData);
+    document.getElementById('userSearch').addEventListener('input', renderUsers);
+    document.getElementById('eventFilter').addEventListener('change', renderEvents);
+    document.getElementById('registrationFilter').addEventListener('change', renderRegistrations);
+    document.getElementById('ticketFilter').addEventListener('change', renderTickets);
+    loadAdminData();
+});
+</script>
+</body>
+</html>

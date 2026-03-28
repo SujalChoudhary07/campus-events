@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Upload Resume & Photo</title>
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="profile-page">
+<div class="background-animation"></div>
+
+<div class="page-shell">
+    <a href="dashboard.html" class="back-btn">Back to Dashboard</a>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <h1>My Profile</h1>
+            <p id="username-display">Loading...</p>
+        </div>
+
+        <div id="successMsg" class="success-msg"></div>
+        <div id="errorMsg" class="error-msg"></div>
+
+        <div class="profile-section">
+            <h2>Profile Picture</h2>
+            <div class="file-upload-box" id="photoBox">
+                <div class="upload-icon">Photo</div>
+                <p>Click or drag to upload your profile photo</p>
+                <small class="subtle-text">JPG, PNG (Max 5MB)</small>
+                <input type="file" id="photoFile" accept="image/*">
+                <div class="file-name" id="photoFileName"></div>
+            </div>
+            <div class="preview-container hidden" id="photoPreview">
+                <img id="photoPreviewImg" class="preview-image" alt="Photo Preview">
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="uploadProfile('photo')">Upload Photo</button>
+                    <button class="btn btn-secondary" onclick="clearPhoto()">Clear</button>
+                </div>
+            </div>
+            <div id="photoStatus"></div>
+        </div>
+
+        <div class="profile-section">
+            <h2>Resume</h2>
+            <div class="file-upload-box" id="resumeBox">
+                <div class="upload-icon">Resume</div>
+                <p>Click or drag to upload your resume</p>
+                <small class="subtle-text">PDF, DOC, DOCX (Max 10MB)</small>
+                <input type="file" id="resumeFile" accept=".pdf,.doc,.docx,.txt">
+                <div class="file-name" id="resumeFileName"></div>
+            </div>
+            <div class="preview-container hidden" id="resumePreview">
+                <p class="subtle-text">Ready to upload</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="uploadProfile('resume')">Upload Resume</button>
+                    <button class="btn btn-secondary" onclick="clearResume()">Clear</button>
+                </div>
+            </div>
+            <div id="resumeStatus"></div>
+        </div>
+
+        <div class="profile-section">
+            <h2>Current Profile</h2>
+            <div class="profile-info">
+                <div class="info-row">
+                    <span class="info-label">Photo Status:</span>
+                    <span id="photoStatus2">Not uploaded</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Resume Status:</span>
+                    <span id="resumeStatus2">Not uploaded</span>
+                </div>
+                <div id="downloadLinks" class="btn-group"></div>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-primary" onclick="loadProfile()">Refresh Profile</button>
+            <a href="dashboard.html" class="btn btn-secondary">Go to Dashboard</a>
+        </div>
+    </div>
+</div>
+
+<script src="auth.js"></script>
+<script>
+let currentUser = '';
+
+document.getElementById('photoBox').addEventListener('click', () => document.getElementById('photoFile').click());
+document.getElementById('photoBox').addEventListener('dragover', (e) => {
+    e.preventDefault();
+    document.getElementById('photoBox').classList.add('active');
+});
+document.getElementById('photoBox').addEventListener('dragleave', () => {
+    document.getElementById('photoBox').classList.remove('active');
+});
+document.getElementById('photoBox').addEventListener('drop', (e) => {
+    e.preventDefault();
+    document.getElementById('photoBox').classList.remove('active');
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+        document.getElementById('photoFile').files = files;
+        handlePhotoSelect();
+    }
+});
+
+document.getElementById('photoFile').addEventListener('change', handlePhotoSelect);
+
+function handlePhotoSelect() {
+    const file = document.getElementById('photoFile').files[0];
+    if (file) {
+        if (file.size > 5 * 1024 * 1024) {
+            showError('Photo must be less than 5MB');
+            return;
+        }
+        document.getElementById('photoFileName').textContent = file.name;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = document.getElementById('photoPreviewImg');
+            img.src = e.target.result;
+            document.getElementById('photoPreview').classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+document.getElementById('resumeBox').addEventListener('click', () => document.getElementById('resumeFile').click());
+document.getElementById('resumeBox').addEventListener('dragover', (e) => {
+    e.preventDefault();
+    document.getElementById('resumeBox').classList.add('active');
+});
+document.getElementById('resumeBox').addEventListener('dragleave', () => {
+    document.getElementById('resumeBox').classList.remove('active');
+});
+document.getElementById('resumeBox').addEventListener('drop', (e) => {
+    e.preventDefault();
+    document.getElementById('resumeBox').classList.remove('active');
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+        document.getElementById('resumeFile').files = files;
+        handleResumeSelect();
+    }
+});
+
+document.getElementById('resumeFile').addEventListener('change', handleResumeSelect);
+
+function handleResumeSelect() {
+    const file = document.getElementById('resumeFile').files[0];
+    if (file) {
+        if (file.size > 10 * 1024 * 1024) {
+            showError('Resume must be less than 10MB');
+            return;
+        }
+        document.getElementById('resumeFileName').textContent = file.name;
+        document.getElementById('resumePreview').classList.remove('hidden');
+    }
+}
+
+function clearPhoto() {
+    document.getElementById('photoFile').value = '';
+    document.getElementById('photoFileName').textContent = '';
+    document.getElementById('photoPreview').classList.add('hidden');
+}
+
+function clearResume() {
+    document.getElementById('resumeFile').value = '';
+    document.getElementById('resumeFileName').textContent = '';
+    document.getElementById('resumePreview').classList.add('hidden');
+}
+
+async function uploadProfile(type) {
+    if (type === 'photo') {
+        const file = document.getElementById('photoFile').files[0];
+        if (!file) return showError('No photo selected');
+        if (file.size > 5 * 1024 * 1024) return showError('Photo must be less than 5MB');
+
+        const btn = event.target;
+        btn.disabled = true;
+        btn.textContent = 'Uploading...';
+
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            const photoData = e.target.result;
+            try {
+                const resp = await apiFetch(`/api/profile/${currentUser}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ photo: photoData })
+                });
+                if (resp.ok) {
+                    showSuccess('Photo uploaded successfully!');
+                    clearPhoto();
+                    setTimeout(loadProfile, 1000);
+                } else {
+                    const errMsg = await resp.text();
+                    showError('Failed to upload photo: ' + errMsg);
+                }
+            } catch (err) {
+                showError('Error uploading photo: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Upload Photo';
+            }
+        };
+        reader.readAsDataURL(file);
+    } else if (type === 'resume') {
+        const file = document.getElementById('resumeFile').files[0];
+        if (!file) return showError('No resume selected');
+        if (file.size > 10 * 1024 * 1024) return showError('Resume must be less than 10MB');
+
+        const btn = event.target;
+        btn.disabled = true;
+        btn.textContent = 'Uploading...';
+
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            const resumeData = e.target.result;
+            try {
+                const resp = await apiFetch(`/api/profile/${currentUser}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ resume: resumeData, resumeFileName: file.name })
+                });
+                if (resp.ok) {
+                    showSuccess('Resume uploaded successfully!');
+                    clearResume();
+                    setTimeout(loadProfile, 1000);
+                } else {
+                    const errMsg = await resp.text();
+                    showError('Failed to upload resume: ' + errMsg);
+                }
+            } catch (err) {
+                showError('Error uploading resume: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Upload Resume';
+            }
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+async function loadProfile() {
+    try {
+        const user = await requireAuthPage(['participant', 'organizer', 'volunteer', 'admin'], 'login.html');
+        if (!user) {
+            return;
+        }
+        currentUser = user.username;
+
+        const resp = await apiFetch(`/api/users/${currentUser}`);
+        if (!resp.ok) throw new Error('Failed to fetch profile: ' + resp.status);
+
+        const data = await resp.json();
+        document.getElementById('username-display').textContent = `Welcome, ${data.user.fullname || currentUser}`;
+
+        const profile = data.profile || {};
+
+        if (profile.photo) {
+            document.getElementById('photoStatus2').textContent = 'Uploaded';
+            document.getElementById('photoStatus2').style.color = '#22c55e';
+        }
+
+        if (profile.resume) {
+            document.getElementById('resumeStatus2').textContent = 'Uploaded';
+            document.getElementById('resumeStatus2').style.color = '#22c55e';
+        }
+
+        let downloadHTML = '';
+        if (profile.photo) {
+            downloadHTML += `<a href="${profile.photo}" download="profile-photo.jpg" class="download-btn">Download Photo</a>`;
+        }
+        if (profile.resume) {
+            const filename = profile.resumeFileName || 'resume.pdf';
+            downloadHTML += `<a href="${profile.resume}" download="${filename}" class="download-btn">Download Resume</a>`;
+        }
+        document.getElementById('downloadLinks').innerHTML = downloadHTML;
+
+    } catch (err) {
+        showError('Error loading profile: ' + err.message);
+    }
+}
+
+function showSuccess(msg) {
+    const el = document.getElementById('successMsg');
+    el.textContent = msg;
+    el.style.display = 'block';
+    setTimeout(() => el.style.display = 'none', 4000);
+}
+
+function showError(msg) {
+    const el = document.getElementById('errorMsg');
+    el.textContent = msg;
+    el.style.display = 'block';
+    setTimeout(() => el.style.display = 'none', 4000);
+}
+
+document.addEventListener('DOMContentLoaded', loadProfile);
+</script>
+</body>
+</html>

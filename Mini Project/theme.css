@@ -1,0 +1,424 @@
+/* Optional dark-mode layer. Shared light theme lives in style.css. */
+
+body.dark {
+  --bg-base: #0f172a;
+  --bg-soft: #162032;
+  --bg-warm: #101827;
+  --glass: rgba(15, 23, 42, 0.72);
+  --glass-strong: rgba(15, 23, 42, 0.84);
+  --border-soft: rgba(148, 163, 184, 0.18);
+  --text-main: #e5eef9;
+  --text-soft: #9eb0c8;
+  --accent: #7da2ff;
+  --accent-hover: #98b5ff;
+  --accent-muted: rgba(125, 162, 255, 0.16);
+  --accent-sage: rgba(132, 199, 176, 0.2);
+  --shadow-soft: 0 22px 60px rgba(2, 6, 23, 0.45);
+  --shadow-hover: 0 26px 65px rgba(37, 99, 235, 0.28);
+}
+
+body.dark {
+  color: var(--text-main);
+  background:
+    radial-gradient(circle at top left, rgba(34, 197, 94, 0.08), transparent 30%),
+    radial-gradient(circle at top right, rgba(125, 162, 255, 0.16), transparent 34%),
+    linear-gradient(135deg, #0b1220 0%, #111b2e 54%, #0f172a 100%);
+}
+
+body.dark .background-animation {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.05), transparent 22%),
+    radial-gradient(circle at 80% 15%, rgba(96, 165, 250, 0.12), transparent 20%),
+    radial-gradient(circle at 70% 70%, rgba(167, 139, 250, 0.1), transparent 24%);
+}
+
+body.dark .navbar,
+body.dark .sidebar,
+body.dark .section,
+body.dark .engage-card,
+body.dark .event-card,
+body.dark .auth-container,
+body.dark .login-box,
+body.dark .register-box,
+body.dark .profile-container,
+body.dark .stat-card,
+body.dark .data-section,
+body.dark .modal-content,
+body.dark .metric-card,
+body.dark .task-table-wrap,
+body.dark .panel-surface {
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.72));
+  border-color: rgba(148, 163, 184, 0.18);
+  color: var(--text-main);
+}
+
+body.dark .navbar {
+  border-bottom-color: rgba(148, 163, 184, 0.14);
+}
+
+body.dark .navbar nav a,
+body.dark .sidebar ul li a,
+body.dark .section p,
+body.dark .engage-card p,
+body.dark .event-card p,
+body.dark .login-link,
+body.dark .register-link,
+body.dark .profile-header p,
+body.dark .table-empty {
+  color: var(--text-soft);
+}
+
+body.dark input,
+body.dark select,
+body.dark textarea {
+  background: rgba(15, 23, 42, 0.68);
+  border-color: rgba(148, 163, 184, 0.22);
+  color: var(--text-main);
+}
+
+body.dark table th {
+  background: rgba(148, 163, 184, 0.08);
+}
+
+body.dark table td {
+  border-bottom-color: rgba(148, 163, 184, 0.12);
+}
+
+body.dark .btn-secondary,
+body.dark .login-btn,
+body.dark .card-btn,
+body.dark .engage-btn,
+body.dark .back-btn {
+  background: rgba(125, 162, 255, 0.12);
+  border-color: rgba(125, 162, 255, 0.22);
+  color: var(--accent);
+}
+
+body.dark .timeline-item,
+body.dark .focus-item,
+body.dark .analytics-item,
+body.dark .timeline-empty,
+body.dark .organizer-key-values div,
+body.dark .organizer-notes {
+  background: rgba(15, 23, 42, 0.5);
+  border-color: rgba(148, 163, 184, 0.18);
+}
+
+body.dark .draft-badge {
+  background: rgba(148, 163, 184, 0.16);
+  color: #cbd5e1;
+  border-color: rgba(148, 163, 184, 0.22);
+}
+
+body.dark .live-badge {
+  background: rgba(56, 189, 248, 0.16);
+  color: #7dd3fc;
+  border-color: rgba(56, 189, 248, 0.24);
+}
+
+body.dark {
+  --bg-base: #1c140f;
+  --bg-soft: #261b14;
+  --bg-warm: #2f2218;
+  --glass: rgba(37, 26, 19, 0.78);
+  --glass-strong: rgba(47, 34, 24, 0.88);
+  --border-soft: rgba(223, 179, 126, 0.16);
+  --text-main: #f3e7d6;
+  --text-soft: #cfb69a;
+  --accent: #d2924f;
+  --accent-hover: #e4a96c;
+  --accent-muted: rgba(210, 146, 79, 0.14);
+  --accent-sage: rgba(168, 126, 92, 0.18);
+  --shadow-soft: 0 22px 60px rgba(8, 5, 2, 0.42);
+  --shadow-hover: 0 26px 65px rgba(210, 146, 79, 0.2);
+}
+
+body.dark .announcement-bar {
+  background: #8b4f1f;
+}
+
+body.dark .navbar {
+  background: rgba(34, 23, 17, 0.86);
+  border-bottom-color: rgba(223, 179, 126, 0.12);
+}
+
+body.dark .login-btn,
+body.dark .btn-secondary,
+body.dark .btn-ghost,
+body.dark .back-btn,
+body.dark .download-btn,
+body.dark .btn {
+  background: rgba(210, 146, 79, 0.12);
+  border-color: rgba(210, 146, 79, 0.18);
+  color: var(--accent);
+}
+
+body.dark .sidebar,
+body.dark .section,
+body.dark .panel-surface,
+body.dark .task-table-wrap,
+body.dark .profile-summary,
+body.dark .profile-info,
+body.dark .login-box,
+body.dark .register-box,
+body.dark .profile-container,
+body.dark .metric-card,
+body.dark .data-section,
+body.dark .modal-content {
+  background: linear-gradient(180deg, rgba(47, 34, 24, 0.9), rgba(34, 23, 17, 0.8));
+  border-color: rgba(223, 179, 126, 0.14);
+}
+
+body.dark .sidebar ul li a {
+  color: #e6d2bb;
+}
+
+body.dark .sidebar ul li a:hover {
+  background: rgba(210, 146, 79, 0.14);
+  color: #ffd9ad;
+}
+
+body.dark .sidebar ul li a.active {
+  background: linear-gradient(135deg, rgba(232, 214, 191, 0.96), rgba(209, 185, 156, 0.9));
+  color: #5a3820;
+  box-shadow: 0 12px 26px rgba(8, 5, 2, 0.18);
+}
+
+body.dark .engage-card,
+body.dark .event-card,
+body.dark .timeline-item,
+body.dark .focus-item,
+body.dark .analytics-item,
+body.dark .timeline-empty,
+body.dark .snapshot-card,
+body.dark .compact-item,
+body.dark .insight-card,
+body.dark .stats-detail-item,
+body.dark .organizer-key-values div,
+body.dark .organizer-notes,
+body.dark .info-item {
+  background: rgba(52, 37, 27, 0.76);
+  border-color: rgba(223, 179, 126, 0.14);
+}
+
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark h5,
+body.dark h6,
+body.dark label,
+body.dark strong,
+body.dark th,
+body.dark .section-title,
+body.dark .sidebar h2,
+body.dark .simple-event-copy h4,
+body.dark .timeline-copy h4,
+body.dark .focus-item h4,
+body.dark .analytics-item h4,
+body.dark .info-label,
+body.dark .hero-label,
+body.dark .timeline-type,
+body.dark .compact-rank,
+body.dark .section-kicker,
+body.dark .cell-subtext strong {
+  color: var(--text-main);
+}
+
+body.dark td,
+body.dark li,
+body.dark small,
+body.dark .subtle-text,
+body.dark .cell-subtext,
+body.dark .timeline-copy span,
+body.dark .compact-item p,
+body.dark .info-item span,
+body.dark .info-item strong,
+body.dark .organizer-progress-label span,
+body.dark .chatbot-head p,
+body.dark .chatbot-message p,
+body.dark .simple-event-copy p,
+body.dark #ticketList p,
+body.dark #notifList p,
+body.dark #modalBody p,
+body.dark #modalBody span {
+  color: var(--text-soft);
+}
+
+body.dark .role-badge,
+body.dark .event-status-badge,
+body.dark .asset-pill,
+body.dark .snapshot-card,
+body.dark .compact-item,
+body.dark .stats-detail-item {
+  color: var(--text-main);
+}
+
+body.dark .profile-info,
+body.dark .preview-container,
+body.dark .file-upload-box,
+body.dark .chat-room-feed,
+body.dark .chatbot-messages,
+body.dark .chatbot-drawer,
+body.dark .simple-event-row,
+body.dark .sidebar-user,
+body.dark .analytics-detail-panel,
+body.dark .chat-room-message.mine,
+body.dark .chatbot-message.user,
+body.dark .success-msg,
+body.dark .error-msg,
+body.dark #profileOverview,
+body.dark #notifList,
+body.dark #ticketList {
+  background: rgba(52, 37, 27, 0.76);
+  border-color: rgba(223, 179, 126, 0.14);
+}
+
+body.dark #profileOverview p,
+body.dark #notifList p,
+body.dark #ticketList p {
+  background: rgba(68, 47, 31, 0.72);
+  border-color: rgba(223, 179, 126, 0.14);
+  color: var(--text-main);
+}
+
+body.dark .info-row,
+body.dark table td,
+body.dark table th {
+  border-color: rgba(223, 179, 126, 0.14);
+}
+
+body.dark .status-success {
+  color: #7dd3a7;
+}
+
+body.dark .status-warning {
+  color: #f7c978;
+}
+
+body.dark .status-error {
+  color: #f3a6a6;
+}
+
+body.dark .status-info {
+  color: #9dc0ff;
+}
+
+body.dark .toolbar-field label,
+body.dark .chat-room-meta,
+body.dark .organizer-stat-card span,
+body.dark .organizer-mini-card span,
+body.dark .organizer-progress-label,
+body.dark .organizer-key-values span,
+body.dark .organizer-notes,
+body.dark .analytics-detail-panel p,
+body.dark #chatEventSelect,
+body.dark #chatEventSelect option {
+  color: var(--text-soft);
+}
+
+body.dark .analytics-detail-panel h3 {
+  color: var(--text-main);
+}
+
+body.dark .home-tab-btn.active {
+  background: linear-gradient(135deg, rgba(210, 146, 79, 0.88), rgba(141, 79, 23, 0.92));
+  border-color: rgba(223, 179, 126, 0.24);
+  color: #fff3e3;
+  box-shadow: 0 14px 28px rgba(8, 5, 2, 0.22);
+}
+
+body.dark #chatEventSelect {
+  background: linear-gradient(180deg, rgba(52, 37, 27, 0.92), rgba(40, 28, 20, 0.88));
+  border-color: rgba(223, 179, 126, 0.18);
+  box-shadow: 0 10px 24px rgba(8, 5, 2, 0.18);
+}
+
+body.dark #chatEventSelect:hover {
+  border-color: rgba(223, 179, 126, 0.28);
+  box-shadow: 0 14px 30px rgba(8, 5, 2, 0.24);
+}
+
+body.dark #chatEventSelect option {
+  background: #2d2118;
+}
+
+body.dark .secondary-chat-btn {
+  background: rgba(45, 87, 78, 0.34);
+  border-color: rgba(102, 187, 170, 0.26);
+  color: #9ee6d7;
+}
+
+body.dark .join-btn {
+  background: linear-gradient(135deg, rgba(210, 146, 79, 0.18), rgba(168, 126, 92, 0.18));
+  border-color: rgba(223, 179, 126, 0.24);
+  color: #f1d8bc;
+}
+
+body.dark .event-status-badge {
+  background: rgba(168, 126, 92, 0.18);
+  color: #f1dfca;
+  border-color: rgba(223, 179, 126, 0.18);
+}
+
+body.dark .upcoming-badge {
+  background: rgba(210, 146, 79, 0.22);
+  color: #ffd9ad;
+  border-color: rgba(223, 179, 126, 0.24);
+}
+
+body.dark .closed-badge {
+  background: rgba(141, 79, 23, 0.18);
+  color: #f0c4a0;
+  border-color: rgba(210, 146, 79, 0.18);
+}
+
+body.dark .live-badge {
+  background: rgba(79, 140, 124, 0.2);
+  color: #9ee6d7;
+  border-color: rgba(102, 187, 170, 0.22);
+}
+
+body.dark .draft-badge {
+  background: rgba(120, 98, 78, 0.22);
+  color: #e6d2bb;
+  border-color: rgba(207, 182, 154, 0.18);
+}
+
+body.dark .chat-room-message.mine {
+  background: linear-gradient(180deg, rgba(92, 63, 39, 0.94), rgba(68, 47, 31, 0.9));
+  border-color: rgba(223, 179, 126, 0.18);
+}
+
+body.dark .chat-room-message {
+  background: rgba(68, 47, 31, 0.78);
+  border-color: rgba(223, 179, 126, 0.14);
+}
+
+body.dark .chatbot-message.user {
+  background: rgba(92, 63, 39, 0.72);
+  border-color: rgba(223, 179, 126, 0.18);
+  color: #f3e7d6;
+}
+
+body.dark .chatbot-message.assistant {
+  background: rgba(68, 47, 31, 0.78);
+  border-color: rgba(223, 179, 126, 0.14);
+  color: var(--text-main);
+}
+
+body.dark .success-msg {
+  background: rgba(52, 64, 44, 0.82);
+  border-color: rgba(125, 211, 167, 0.18);
+  color: #cdeccf;
+}
+
+body.dark .error-msg {
+  background: rgba(78, 42, 36, 0.82);
+  border-color: rgba(243, 166, 166, 0.18);
+  color: #f2c0c0;
+}
+
+body.dark tr:hover td {
+  background: rgba(68, 47, 31, 0.52);
+}
